@@ -1,1 +1,0 @@
-# musical_transcription_tool
