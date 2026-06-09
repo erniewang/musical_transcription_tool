@@ -5,5 +5,4 @@ Essential Melodica Algorithm (https://www.justinsalamon.com/melody-extraction.ht
   4. contour creation: document all "pseudo melodies" or continous salience pitches for further processing.
   5. melody selection: look through all the continous, run through some math models, and return the result.
 
-SwitftF0:
-    
+Quantization Algorithms Explained: 

@@ -1,0 +1,44 @@
+Metadata-Version: 2.4
+Name: pitchlab-standalone
+Version: 0.1.0
+Summary: Standalone pitch/F0 extraction adapters with section-level Hz range constraints.
+Requires-Python: >=3.9
+Requires-Dist: numpy>=1.23
+Requires-Dist: pandas>=1.5
+Requires-Dist: librosa>=0.10
+Requires-Dist: soundfile>=0.12
+Provides-Extra: torchcrepe
+Requires-Dist: torch; extra == "torchcrepe"
+Requires-Dist: torchaudio; extra == "torchcrepe"
+Requires-Dist: torchcrepe; extra == "torchcrepe"
+Provides-Extra: crepe
+Requires-Dist: crepe; extra == "crepe"
+Requires-Dist: tensorflow; extra == "crepe"
+Provides-Extra: basic-pitch
+Requires-Dist: basic-pitch; extra == "basic-pitch"
+Provides-Extra: essentia
+Requires-Dist: essentia; extra == "essentia"
+Provides-Extra: pyworld
+Requires-Dist: pyworld; extra == "pyworld"
+Provides-Extra: yaapt
+Requires-Dist: amfm-decompy; extra == "yaapt"
+Provides-Extra: plot
+Requires-Dist: matplotlib; extra == "plot"
+Provides-Extra: midi
+Requires-Dist: pretty_midi; extra == "midi"
+Provides-Extra: all
+Requires-Dist: torch; extra == "all"
+Requires-Dist: torchaudio; extra == "all"
+Requires-Dist: torchcrepe; extra == "all"
+Requires-Dist: crepe; extra == "all"
+Requires-Dist: tensorflow; extra == "all"
+Requires-Dist: basic-pitch; extra == "all"
+Requires-Dist: essentia; extra == "all"
+Requires-Dist: pyworld; extra == "all"
+Requires-Dist: amfm-decompy; extra == "all"
+Requires-Dist: matplotlib; extra == "all"
+Requires-Dist: pretty_midi; extra == "all"
+Dynamic: provides-extra
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary

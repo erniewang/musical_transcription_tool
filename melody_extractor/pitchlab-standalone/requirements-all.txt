@@ -1,0 +1,13 @@
+-r requirements-core.txt
+# Heavy/optional engines. Install only what you need.
+torch
+torchaudio
+torchcrepe
+crepe
+tensorflow
+basic-pitch
+essentia
+pyworld
+amfm-decompy
+matplotlib
+pretty_midi
