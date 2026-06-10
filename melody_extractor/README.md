@@ -1,15 +1,12 @@
 # Melody Extractor
 
-This folder owns the first half of the melody workflow: prepare audio, split it into sections, run pitch models, and export pitch-run CSVs.
+This folder keeps the melody extraction workflow intentionally small:
 
-## Where To Make Changes
+- `melody_extraction.ipynb`: the readable notebook workflow.
+- `tools.py`: helper functions for loading audio, displaying audio, splitting sections, filtering, running PitchLab models, cleaning output folders, and saving CSV files.
+- `extractor_model.txt`: the notebook outline used to shape the workflow.
 
-- `config.py`: turn prefilters and pitch models on/off, choose the input file, edit section timestamps, and set the pitch range.
-- `pipeline.py`: reusable workflow code used by the notebook.
-- `tools/`: low-level helpers for audio changes and CSV export.
-- `melody_extraction.ipynb`: notebook interface for running the workflow. The first code cell exposes the main toggles so you can experiment without digging through later cells.
-
-Raw audio, filtered audio, and split sections are kept in notebook variables. The notebook does not save temporary sound files.
+Edit the notebook when you want to change the audio file, section timestamps, filters, model pitch ranges, or model list. Edit `tools.py` only when the helper behavior itself needs to change.
 
 Pitch-run exports are grouped by model:
 
@@ -20,24 +17,4 @@ experiments/pitch_runs/
     uzbek_dari_section_2_torchcrepe.csv
   librosa-yin/
     uzbek_dari_section_1_librosa-yin.csv
-```
-
-## Common Toggles
-
-Disable a prefilter:
-
-```python
-{"name": "high_pass", "enabled": False, "params": {...}}
-```
-
-Disable a model:
-
-```python
-{"name": "torchcrepe", "enabled": False}
-```
-
-Split audio is processed section by section in order. To skip splitting and run models on the whole filtered file:
-
-```python
-SPLIT_AUDIO = False
 ```
