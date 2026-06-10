@@ -1,3 +1,0 @@
-To write midi notes accurately within a rhythmic context in sheet music. It will need to be quantized well, and it is usually not this easy for many songs that are not straight 8ths. Take jazz for example. The rhythmn between the notes are not always fixed intervals, it meanders around the offbeats. One way to mitigate this is to run a strict quantizer, but based off of what metric. There will need to be some research done on what models can estimate the tempo of a audio recording and place downbeats. 
-
-Users will select sections with consistent tempo and be able to establish what is the downbeat or when is it the beginning of a new measure. 
