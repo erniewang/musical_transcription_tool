@@ -1,7 +1,8 @@
 """Pitch-run cleanup functions used by the refinement notebook."""
 
 import numpy as np
-
+import pandas as pd
+from music21 import scale, pitch
 
 def apply_to_runs(data_frames, function, **kwargs):
     """Apply one cleanup function to each DataFrame."""
@@ -58,3 +59,44 @@ def _selected_columns(data_frame, columns):
         raise KeyError(f"Missing column(s): {', '.join(missing_columns)}")
 
     return columns
+
+#also problematic with super low frequencies, there might be collisions
+#trying to directly index is gonna get ugly. because if i want to get the music21 pitches exactly, then each note is gonna have a very specific hz. 
+#find the closest object in a in distance that is closer to the thing
+def auto_tune(df, scale: scale, lower_bound="a0", upper_bound="c7", other_pitches:str[]=None):
+    pitch_set = [p.frequency for p in scale.getPitches(lower_bound, upper_bound)]
+
+    if other_pitches:
+        for i in range(10):
+            for p in other_pitches:
+                new_pitch = pitch.Pitch(str(i)+p)
+                if new_pitch.frequency > pitch.Pitch(lower_bound).frequency and new_pitch.frequency < pitch.Pitch(upper_bound).frequency:
+                    pitch_set.append(new_pitch.frequency)
+    #double check that this shit works
+    
+    pitch_data = np.zeros(3000)
+    for pitch in pitch_set:
+        pitch_data[int(pitch)] = pitch
+
+    def find_nearest_good_note(freq):
+        if not freq or pd.isna(freq):
+            return 0
+        down = int(freq) - 1
+        up = int(freq) + 1
+        while up < 3000 and down > 0:
+            if pitch_data[up] != 0:
+                return pitch_data[up]
+            if pitch_data[down] != 0:
+                return pitch_data[down]
+            up+=1
+            down-=1
+        return 0
+        
+    df["frequency_hz"] = df["frequency_hz"].apply(find_nearest_good_note)
+    #print(df["frequency_hz"][:20])
+    return df
+
+
+if __name__ == "__main__":
+    df = pd.read_csv('test.csv')
+    auto_tune(df,scale.MinorScale("d"))
