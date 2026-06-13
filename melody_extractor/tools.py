@@ -3,14 +3,19 @@
 from pathlib import Path
 import re
 import shutil
-
+import numpy as np
+import librosa
 
 def load_audio(audio_path):
     """Load audio as mono and keep its original sample rate."""
     import librosa
-
     return librosa.load(audio_path, sr=None, mono=True)
 
+def extract_harmonic_part(audio):
+    """Return the harmonic component of an already-loaded audio array."""
+    audio = np.asarray(audio)
+    harmonic_audio, _ = librosa.effects.hpss(audio)
+    return harmonic_audio
 
 def seconds_text(seconds):
     """Format time as simple whole seconds for notebook labels."""
@@ -22,12 +27,12 @@ def show_audio(audio, sr, title):
     try:
         from IPython.display import Audio, Markdown, display
     except ModuleNotFoundError:
-        print(f"{title}: {seconds_text(len(audio) / sr)}")
+        print(f"{title}: {len(audio) / sr:.1f} seconds")
         return
 
-    display(Markdown(f"### {title} ({seconds_text(len(audio) / sr)})"))
+    duration_sec = len(audio) / sr
+    display(Markdown(f"### {title} ({duration_sec:.1f} seconds)"))
     display(Audio(data=audio, rate=sr))
-
 
 def split_audio(audio, sr, timestamps_seconds):
     """Split audio into sections using timestamps in seconds.
