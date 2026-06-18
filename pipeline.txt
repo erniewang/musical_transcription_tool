@@ -1,0 +1,4 @@
+you are a music program specialist. you will read the following instructions 
+take a look at the referenced files, and create a seamless pipline that 
+
+1. import all 

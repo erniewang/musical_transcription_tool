@@ -63,20 +63,20 @@ def _selected_columns(data_frame, columns):
 #also problematic with super low frequencies, there might be collisions
 #trying to directly index is gonna get ugly. because if i want to get the music21 pitches exactly, then each note is gonna have a very specific hz. 
 #find the closest object in a in distance that is closer to the thing
-def auto_tune(df, scale: scale, lower_bound="a0", upper_bound="c7", other_pitches:str[]=None):
+def auto_tune(df, scale: scale, lower_bound="a0", upper_bound="c7", other_pitches: list[str] | None = None):
     pitch_set = [p.frequency for p in scale.getPitches(lower_bound, upper_bound)]
 
     if other_pitches:
         for i in range(10):
             for p in other_pitches:
-                new_pitch = pitch.Pitch(str(i)+p)
+                new_pitch = pitch.Pitch(p+str(i))
                 if new_pitch.frequency > pitch.Pitch(lower_bound).frequency and new_pitch.frequency < pitch.Pitch(upper_bound).frequency:
                     pitch_set.append(new_pitch.frequency)
     #double check that this shit works
     
     pitch_data = np.zeros(3000)
-    for pitch in pitch_set:
-        pitch_data[int(pitch)] = pitch
+    for _pitch in pitch_set:
+        pitch_data[int(_pitch)] = _pitch
 
     def find_nearest_good_note(freq):
         if not freq or pd.isna(freq):

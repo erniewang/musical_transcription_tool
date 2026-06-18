@@ -1,0 +1,54 @@
+Metadata-Version: 2.4
+Name: pitchlab-ernie
+Version: 0.2.0
+Summary: Simple raw-audio pitch and transcription model runners.
+Requires-Python: >=3.9
+Requires-Dist: numpy>=1.23
+Requires-Dist: pandas>=1.5
+Requires-Dist: soundfile>=0.12
+Provides-Extra: librosa
+Requires-Dist: librosa>=0.10; extra == "librosa"
+Provides-Extra: torchcrepe
+Requires-Dist: torch; extra == "torchcrepe"
+Requires-Dist: torchaudio; extra == "torchcrepe"
+Requires-Dist: torchcrepe; extra == "torchcrepe"
+Provides-Extra: fcpe
+Requires-Dist: torch; extra == "fcpe"
+Requires-Dist: librosa>=0.10; extra == "fcpe"
+Requires-Dist: torchfcpe; extra == "fcpe"
+Provides-Extra: penn
+Requires-Dist: torch; extra == "penn"
+Requires-Dist: penn; extra == "penn"
+Provides-Extra: basic-pitch
+Requires-Dist: basic-pitch; extra == "basic-pitch"
+Provides-Extra: essentia
+Requires-Dist: essentia; extra == "essentia"
+Provides-Extra: pyworld
+Requires-Dist: pyworld; extra == "pyworld"
+Provides-Extra: yaapt
+Requires-Dist: amfm-decompy; extra == "yaapt"
+Provides-Extra: midi
+Requires-Dist: pretty_midi>=0.2.10; extra == "midi"
+Provides-Extra: yourmt3
+Requires-Dist: yourmt3; extra == "yourmt3"
+Requires-Dist: huggingface-hub; extra == "yourmt3"
+Requires-Dist: pretty_midi>=0.2.10; extra == "yourmt3"
+Requires-Dist: librosa>=0.10; extra == "yourmt3"
+Provides-Extra: all
+Requires-Dist: librosa>=0.10; extra == "all"
+Requires-Dist: torch; extra == "all"
+Requires-Dist: torchaudio; extra == "all"
+Requires-Dist: torchcrepe; extra == "all"
+Requires-Dist: torchfcpe; extra == "all"
+Requires-Dist: penn; extra == "all"
+Requires-Dist: basic-pitch; extra == "all"
+Requires-Dist: essentia; extra == "all"
+Requires-Dist: pyworld; extra == "all"
+Requires-Dist: amfm-decompy; extra == "all"
+Requires-Dist: pretty_midi>=0.2.10; extra == "all"
+Requires-Dist: yourmt3; extra == "all"
+Requires-Dist: huggingface-hub; extra == "all"
+Dynamic: provides-extra
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary

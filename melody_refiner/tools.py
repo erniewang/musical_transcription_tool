@@ -16,7 +16,7 @@ def list_pitch_run_files(input_dir, suffix=".csv"):
     ]
 
 
-def load_pitch_runs(input_dir, combine_sections=True, time_column="time"):
+def load_pitch_runs(input_dir, song_name, combine_sections=True, time_column="time"):
     """Load pitch-run CSV files.
 
     When ``combine_sections`` is true, section CSVs are grouped by model and
@@ -28,16 +28,18 @@ def load_pitch_runs(input_dir, combine_sections=True, time_column="time"):
 
     grouped_sections = {}
     for file in pitch_run_files:
-        data_frame = _read_pitch_run(file)
-        model_name = _model_name(data_frame, file)
-        grouped_sections.setdefault(model_name, []).append(
-            {
-                "path": file,
-                "section_number": _section_number(file),
-                "data_frame": data_frame,
-            }
-        )
-
+        if song_name and song_name in str(file):
+            print(song_name, "for the file", file)
+            data_frame = _read_pitch_run(file)
+            model_name = _model_name(data_frame, file)
+            grouped_sections.setdefault(model_name, []).append(
+                {
+                    "path": file,
+                    "section_number": _section_number(file),
+                    "data_frame": data_frame,
+                }
+            )
+            
     data_frames = []
     for model_name, sections in sorted(grouped_sections.items()):
         ordered_sections = sorted(
@@ -50,7 +52,6 @@ def load_pitch_runs(input_dir, combine_sections=True, time_column="time"):
         ]
         merged.attrs["source_stem"] = model_name
         data_frames.append(merged)
-
     return data_frames
 
 
@@ -74,7 +75,6 @@ def save_pitch_runs(data_frames, output_dir, model_column="model", suffix="_refi
         csv_path = model_output_path / filename
         data_frame.to_csv(csv_path, index=False)
         saved_paths.append(csv_path)
-
     return saved_paths
 
 

@@ -145,8 +145,12 @@ def run_pitch_model(section, model_name, pitch_range_hz):
     """Run one PitchLab model on one section."""
     import pitchlab
 
-    model = pitchlab.get_model(model_name)
-    return model.predict(section["audio"], section["sr"], range=pitch_range_hz)
+    return pitchlab.run_model(
+        model_name,
+        section["audio"],
+        {"sample_rate": section["sr"], "freq_range": pitch_range_hz},
+        desired_output="pandas_df",
+    )
 
 
 def save_pitch_run(data_frame, output_dir, audio_name, section_number, model_name):

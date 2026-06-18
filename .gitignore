@@ -1,0 +1,13 @@
+# Jupyter / notebook local state
+.ipynb_checkpoints/
+**/.ipynb_checkpoints/
+.virtual_documents/
+**/.virtual_documents/
+.jupyter/
+.ipython/
+
+# Python local caches
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*$py.class
