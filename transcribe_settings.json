@@ -1,0 +1,68 @@
+{
+  "input": {
+    "audio_file": "input/uzbek_dari.mp3",
+    "start_seconds": 0.0,
+    "end_seconds": null,
+    "sample_rate": 44100
+  },
+  "preprocessing": {
+    "extract_harmonic_part": {
+      "enabled": true,
+      "order": 1
+    },
+    "high_pass_filter": {
+      "enabled": true,
+      "cutoff_hz": 131.0,
+      "order": 2
+    },
+    "low_pass_filter": {
+      "enabled": true,
+      "cutoff_hz": 2000.0,
+      "order": 3
+    }
+  },
+  "extraction": {
+    "models": [
+      "librosa-pyin",
+      "librosa-yin",
+      "torchcrepe",
+      "crepe",
+      "essentia-melodia",
+      "pyworld-dio",
+      "pyworld-harvest",
+      "yaapt",
+      "penn",
+      "fcpe",
+      "swiftf0"
+    ],
+    "hop_ms": 10.0,
+    "min_pitch_hz": 50.0,
+    "max_pitch_hz": 2000.0
+  },
+  "postprocessing": {
+    "confidence_filter": {
+      "enabled": true,
+      "min_confidence": 0.25,
+      "order": 1
+    },
+    "pitch_range_filter": {
+      "enabled": true,
+      "range_hz": [165.0, 415.0],
+      "order": 2
+    },
+    "interpolate": {
+      "enabled": true,
+      "method": "linear",
+      "order": 3
+    },
+    "quantize": {
+      "enabled": true,
+      "pitch_set": null,
+      "order": 4
+    }
+  },
+  "output": {
+    "directory": null,
+    "sonify_format": "mp3"
+  }
+}

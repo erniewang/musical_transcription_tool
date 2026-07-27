@@ -1,3 +1,0 @@
-[console_scripts]
-pitchlab = pitchlab.cli:main
-pitchlab-ernie = pitchlab.cli:main
