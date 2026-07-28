@@ -5,7 +5,6 @@ from __future__ import annotations
 import os
 from contextlib import contextmanager
 from pathlib import Path
-from tempfile import TemporaryDirectory
 
 import numpy as np
 import pandas as pd
@@ -30,14 +29,44 @@ def dataframe_to_midi(data: pd.DataFrame, output_path: str | Path) -> Path:
     return output_path
 
 
-def score_from_pitch_run(pitch_run):
-    from music21 import converter
+def _configure_score(score, piece_name: str, model_name: str):
+    from music21 import clef, metadata
+
+    score.metadata = metadata.Metadata()
+    score.metadata.title = f"{piece_name} ({model_name})"
+    for part in score.parts:
+        for existing in list(part.recurse().getElementsByClass(clef.Clef)):
+            existing.activeSite.remove(existing)
+        part.insert(0, clef.TrebleClef())
+    return score
+
+
+def score_from_pitch_run(pitch_run, piece_name: str):
+    """Build a monophonic score from f0 segments without rhythmic quantization."""
+    from music21 import meter, note, stream, tempo
 
     model_name = str(pitch_run["model"].iloc[0])
-    with TemporaryDirectory() as directory:
-        midi_path = Path(directory) / f"{model_name}.mid"
-        dataframe_to_midi(pitch_run, midi_path)
-        return converter.parse(midi_path, quantizePost=True, quarterLengthDivisors=(4,))
+    segments = _pitch_segments(pitch_run)
+    times = pitch_run["time"].to_numpy(dtype=float)
+    hop_seconds = float(np.median(np.diff(times))) if len(times) > 1 else 0.01
+    # Scale tempo so one analysis frame equals a 32nd note (export-safe, unquantized lengths).
+    seconds_per_quarter = hop_seconds / 0.125
+    bpm = 60.0 / seconds_per_quarter
+
+    part = stream.Part()
+    part.insert(0, tempo.MetronomeMark(number=bpm))
+    part.insert(0, meter.TimeSignature("4/4"))
+    for start, end, pitch_midi in segments:
+        duration_quarters = (end - start) / seconds_per_quarter
+        if duration_quarters <= 0:
+            continue
+        pitched = note.Note(int(pitch_midi))
+        pitched.quarterLength = duration_quarters
+        part.insert(start / seconds_per_quarter, pitched)
+
+    score = stream.Score()
+    score.append(part)
+    return _configure_score(score, piece_name, model_name)
 
 
 @contextmanager

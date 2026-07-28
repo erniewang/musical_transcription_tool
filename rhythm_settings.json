@@ -1,0 +1,35 @@
+{
+  "input": {
+    "audio_file": "input/uzbek_dari.mp3",
+    "start_seconds": 0.0,
+    "end_seconds": null,
+    "sample_rate": 44100
+  },
+  "preprocessing": {
+    "extract_harmonic_part": {
+      "enabled": false,
+      "order": 1
+    },
+    "high_pass_filter": {
+      "enabled": false,
+      "cutoff_hz": 131.0,
+      "order": 2
+    },
+    "low_pass_filter": {
+      "enabled": false,
+      "cutoff_hz": 2000.0,
+      "order": 3
+    }
+  },
+  "extraction": {
+    "models": ["PLACEHOLDER_RHYTHM_MODEL"],
+    "hop_ms": 10.0,
+    "min_pitch_hz": 50.0,
+    "max_pitch_hz": 2000.0
+  },
+  "postprocessing": {},
+  "output": {
+    "directory": null,
+    "sonify_format": "mp3"
+  }
+}

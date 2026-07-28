@@ -26,14 +26,12 @@
       "librosa-pyin",
       "librosa-yin",
       "torchcrepe",
-      "crepe",
       "essentia-melodia",
       "pyworld-dio",
       "pyworld-harvest",
       "yaapt",
       "penn",
-      "fcpe",
-      "swiftf0"
+      "fcpe"
     ],
     "hop_ms": 10.0,
     "min_pitch_hz": 50.0,
@@ -42,7 +40,7 @@
   "postprocessing": {
     "confidence_filter": {
       "enabled": true,
-      "min_confidence": 0.25,
+      "min_confidence": 0.2,
       "order": 1
     },
     "pitch_range_filter": {
@@ -51,12 +49,12 @@
       "order": 2
     },
     "interpolate": {
-      "enabled": true,
+      "enabled": false,
       "method": "linear",
       "order": 3
     },
     "quantize": {
-      "enabled": true,
+      "enabled": false,
       "pitch_set": null,
       "order": 4
     }
